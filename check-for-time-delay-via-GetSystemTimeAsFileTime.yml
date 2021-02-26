@@ -1,0 +1,13 @@
+rule:
+  meta:
+    name: check for time delay via GetSystemTimeAsFileTime
+    namespace: anti-analysis/anti-debugging/debugger-detection   #gettickcount算作debugger-detection
+    author: scorpion
+    scope: function
+    att&ck:
+      - Virtualization/Sandbox Evasion:: Time Based Evasion [T1497.003]
+    examples:
+      - Practical Malware Analysis Lab 16-03.exe_:0x4013d0  #样本触发地 需要寻找
+  features:
+    - and:
+      - count(api(kernel32.GetSystemTimeAsFileTime)): 2 or more
